@@ -1,0 +1,75 @@
+{
+  "$schema" : "http://json-schema.org/draft-07/schema#",
+  "type" : "object",
+  "extends" : { "$ref": "Event.json" },
+  "properties" : {
+    "Flags" : {
+      "title" : "Flags",
+      "type" : "integer",
+      "examples" : [ 16842765, 18874376 ]
+    },
+    "Flags2" : {
+      "title" : "Flags",
+      "type" : "integer",
+      "examples" : [ 16842765, 18874376 ]
+    },
+    "Pips" : {
+      "title" : "Pips",
+      "type" : "array",
+      "items" : {
+        "type" : "integer",
+        "examples" : [ 2, 8, 4 ]
+      }
+    },
+    "FireGroup" : {
+      "title" : "FireGroup",
+      "type" : "integer",
+      "examples" : [ 0 ]
+    },
+    "Fuel" : {
+      "title" : "Fuel",
+      "type" : "object",
+      "properties" : {
+        "FuelMain" : {
+          "title" : "FuelMain",
+          "type" : "number",
+          "examples" : [ 15.146626 ]
+        },
+        "FuelReservoir" : {
+          "title" : "FuelReservoir",
+          "type" : "number",
+          "examples" : [ 0.382796 ]
+        }
+      },
+      "additionalProperties" : false,
+      "required" : [ "FuelMain", "FuelReservoir" ]
+    },
+    "GuiFocus" : {
+      "title" : "GuiFocus",
+      "type" : "integer",
+      "examples" : [ 5, 0 ]
+    },
+    "Latitude" : {
+      "title" : "Latitude",
+      "type" : "number",
+      "examples" : [ -28.584963 ]
+    },
+    "Longitude" : {
+      "title" : "Longitude",
+      "type" : "number",
+      "examples" : [ 6.826313 ]
+    },
+    "Heading" : {
+      "title" : "Heading",
+      "type" : "integer",
+      "examples" : [ 109 ]
+    },
+    "Altitude" : {
+      "title" : "Altitude",
+      "type" : "integer",
+      "examples" : [ 404 ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "timestamp", "event", "Flags", "Flags2", "Pips", "FireGroup", "Fuel", "GuiFocus" ]
+}
