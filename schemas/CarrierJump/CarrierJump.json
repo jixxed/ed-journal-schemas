@@ -109,6 +109,11 @@
       "type" : "boolean",
       "examples" : [ false ]
     },
+    "Wanted" : {
+      "title" : "Wanted",
+      "type" : "boolean",
+      "examples" : [ true ]
+    },
     "StarSystem" : {
       "title" : "StarSystem",
       "description": "Name of destination starsystem",
@@ -481,6 +486,12 @@
         "examples" : [ "A. Lavigny-Duval", "Zachary Hudson", "Li Yong-Rui" ]
       }
     },
+    "ControllingPower" : {
+      "title" : "ControllingPower",
+      "description": "Controlling power for the system",
+      "type" : "string",
+      "examples" : [ "Zachary Hudson", "Yuri Grom", "Li Yong-Rui" ]
+    },
     "PowerplayState" : {
       "title" : "PowerplayState",
       "type" : "string",
@@ -488,5 +499,5 @@
     }
   },
   "additionalProperties" : false,
-  "required" : [ "Docked", "StationName", "StationType", "MarketID", "StationFaction", "StationGovernment", "StationEconomy", "StationEconomies", "StarSystem", "SystemAddress", "StarPos", "SystemAllegiance", "SystemEconomy", "SystemSecondEconomy", "SystemGovernment", "SystemSecurity", "Population", "Body", "BodyID", "BodyType" ]
+  "required" : [ "Docked", "StationName", "StationType", "MarketID", "StationGovernment", "StationEconomy", "StarSystem", "SystemAddress", "StarPos", "SystemAllegiance", "SystemEconomy", "SystemSecondEconomy", "SystemGovernment", "SystemSecurity", "Population", "Body", "BodyID", "BodyType" ]
 }
