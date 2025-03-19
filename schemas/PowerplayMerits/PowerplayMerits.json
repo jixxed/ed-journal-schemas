@@ -22,5 +22,5 @@
     }
   },
   "additionalProperties" : false,
-  "required" : [ "Power", "Merits" ]
+  "required" : [ "Power", "MeritsGained", "TotalMerits" ]
 }
