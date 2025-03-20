@@ -13,7 +13,12 @@
     "StationName" : {
       "title" : "StationName",
       "type" : "string",
-      "examples" : [ "A1A-B2B", "Gann Dock", "Stargazer" ]
+      "examples" : [ "A1A-B2B", "Gann Dock", "$EXT_PANEL_ColonisationShip:#index=1;" ]
+    },
+    "StationName_Localised" : {
+      "title" : "StationName_Localised",
+      "type" : "string",
+      "examples" : [ "System Colonisation Ship" ]
     },
     "StationType" : {
       "title" : "StationType",
