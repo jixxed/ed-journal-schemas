@@ -226,8 +226,16 @@ try {
         
         // Copy static assets
         console.log('Copying static assets...');
-        await fs.copy(path.join(__dirname, '..', 'src', 'assets'), path.join(DIST_DIR, 'assets'));
-        console.log('Static assets copied');
+        const assetsSrc = path.join(__dirname, '..', 'src', 'assets');
+        const assetsDist = path.join(DIST_DIR, 'assets');
+        
+        if (fs.existsSync(assetsSrc)) {
+            await fs.copy(assetsSrc, assetsDist);
+            console.log('Static assets copied');
+        } else {
+            console.log('No assets directory found, skipping asset copy');
+            fs.ensureDirSync(assetsDist);
+        }
         
         // Write styles
         await fs.writeFile(path.join(DIST_DIR, 'styles.css'), result.css);
