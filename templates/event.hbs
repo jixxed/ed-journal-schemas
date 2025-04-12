@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{name}} - Elite Dangerous Journal Schemas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Elite Dangerous Journal Schemas</h1>
+        <nav>
+            <a href="index.html">Back to Events</a>
+        </nav>
+    </header>
+
+    <main>
+        <article class="event-details">
+            <h2>{{name}}</h2>
+            <p class="description">{{description}}</p>
+
+            <!-- Debug information -->
+            <div class="debug-info" style="display: none;">
+                <h3>Debug Information</h3>
+                <pre>{{json this}}</pre>
+            </div>
+
+            <section class="properties">
+                <h3>Properties</h3>
+                {{#if properties}}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
+                                <th>Examples</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each properties}}
+                                <tr class="{{#if properties}}nested-property{{/if}}">
+                                    <td>
+                                        <code>{{name}}</code>
+                                    </td>
+                                    <td><code>{{type}}</code></td>
+                                    <td>{{#if required}}Yes{{else}}No{{/if}}</td>
+                                    <td>{{description}}</td>
+                                    <td>
+                                        {{#if examples}}
+                                            <ul class="examples">
+                                                {{#each examples}}
+                                                    <li><code>{{this}}</code></li>
+                                                {{/each}}
+                                            </ul>
+                                        {{else}}
+                                            -
+                                        {{/if}}
+                                    </td>
+                                </tr>
+                                {{#if properties}}
+                                    <tr class="nested-properties">
+                                        <td colspan="5">
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Type</th>
+                                                        <th>Required</th>
+                                                        <th>Description</th>
+                                                        <th>Examples</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {{#each properties}}
+                                                        <tr class="{{#if properties}}nested-property{{/if}}">
+                                                            <td>
+                                                                <code>{{name}}</code>
+                                                            </td>
+                                                            <td><code>{{type}}</code></td>
+                                                            <td>{{#if required}}Yes{{else}}No{{/if}}</td>
+                                                            <td>{{description}}</td>
+                                                            <td>
+                                                                {{#if examples}}
+                                                                    <ul class="examples">
+                                                                        {{#each examples}}
+                                                                            <li><code>{{this}}</code></li>
+                                                                        {{/each}}
+                                                                    </ul>
+                                                                {{else}}
+                                                                    -
+                                                                {{/if}}
+                                                            </td>
+                                                        </tr>
+                                                        {{#if properties}}
+                                                            <tr class="nested-properties">
+                                                                <td colspan="5">
+                                                                    <table>
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Name</th>
+                                                                                <th>Type</th>
+                                                                                <th>Required</th>
+                                                                                <th>Description</th>
+                                                                                <th>Examples</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            {{#each properties}}
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <code>{{name}}</code>
+                                                                                    </td>
+                                                                                    <td><code>{{type}}</code></td>
+                                                                                    <td>{{#if required}}Yes{{else}}No{{/if}}</td>
+                                                                                    <td>{{description}}</td>
+                                                                                    <td>
+                                                                                        {{#if examples}}
+                                                                                            <ul class="examples">
+                                                                                                {{#each examples}}
+                                                                                                    <li><code>{{this}}</code></li>
+                                                                                                {{/each}}
+                                                                                            </ul>
+                                                                                        {{else}}
+                                                                                            -
+                                                                                        {{/if}}
+                                                                                    </td>
+                                                                                </tr>
+                                                                            {{/each}}
+                                                                        </tbody>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        {{/if}}
+                                                    {{/each}}
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                {{/if}}
+                            {{/each}}
+                        </tbody>
+                    </table>
+                {{else}}
+                    <p>No properties found for this event.</p>
+                {{/if}}
+            </section>
+        </article>
+    </main>
+</body>
+</html> 

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Dangerous Journal Schemas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Elite Dangerous Journal Schemas</h1>
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Search events...">
+        </div>
+    </header>
+
+    <main>
+        <section class="events-list">
+            <h2>All Events</h2>
+            <div class="events-grid" id="events-grid">
+                {{#each events}}
+                <div class="event-card" data-event="{{name}}" data-description="{{description}}">
+                    <h3>{{name}}</h3>
+                    <p>{{description}}</p>
+                    <a href="{{name}}.html" class="view-details">View Details</a>
+                </div>
+                {{/each}}
+            </div>
+            <div id="no-results" class="no-results" style="display: none;">
+                No events found matching your search
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('search');
+            const eventCards = document.querySelectorAll('.event-card');
+            const noResults = document.getElementById('no-results');
+            
+            function highlightText(text, query) {
+                if (!query) return text;
+                const regex = new RegExp(`(${query})`, 'gi');
+                return text.replace(regex, '<mark>$1</mark>');
+            }
+            
+            function matchesQuery(text, query) {
+                if (!text || !query) return false;
+                return text.toLowerCase().includes(query.toLowerCase());
+            }
+            
+            function filterEvents(query) {
+                let hasResults = false;
+                const words = query.toLowerCase().split(/\s+/).filter(w => w.length > 0);
+                
+                eventCards.forEach(card => {
+                    const eventName = card.getAttribute('data-event');
+                    const eventDesc = card.getAttribute('data-description');
+                    let isVisible = false;
+                    
+                    // Check if any word matches either the name or description
+                    for (const word of words) {
+                        if (matchesQuery(eventName, word) || matchesQuery(eventDesc, word)) {
+                            isVisible = true;
+                            break;
+                        }
+                    }
+                    
+                    if (isVisible) {
+                        hasResults = true;
+                        card.style.display = 'block';
+                        
+                        // Highlight matching text
+                        const nameElement = card.querySelector('h3');
+                        const descElement = card.querySelector('p');
+                        nameElement.innerHTML = highlightText(eventName, query);
+                        descElement.innerHTML = highlightText(eventDesc, query);
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                noResults.style.display = hasResults ? 'none' : 'block';
+            }
+            
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.trim();
+                
+                if (query.length < 2) {
+                    // Reset all cards to visible
+                    eventCards.forEach(card => {
+                        card.style.display = 'block';
+                        const nameElement = card.querySelector('h3');
+                        const descElement = card.querySelector('p');
+                        nameElement.innerHTML = nameElement.textContent;
+                        descElement.innerHTML = descElement.textContent;
+                    });
+                    noResults.style.display = 'none';
+                    return;
+                }
+                
+                filterEvents(query);
+            });
+        });
+    </script>
+</body>
+</html> 

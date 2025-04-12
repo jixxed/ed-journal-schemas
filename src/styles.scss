@@ -1,0 +1,203 @@
+@use "sass:color";
+
+// Variables
+$primary-color: #2c3e50;
+$secondary-color: #3498db;
+$background-color: #f5f6fa;
+$text-color: #2c3e50;
+$border-color: #dcdde1;
+
+// Reset and base styles
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+    color: $text-color;
+    background-color: $background-color;
+}
+
+// Header styles
+header {
+    background-color: $primary-color;
+    color: white;
+    padding: 2rem;
+    margin-bottom: 2rem;
+
+    h1 {
+        margin-bottom: 1rem;
+    }
+
+    .search-container {
+        position: relative;
+        max-width: 600px;
+
+        input {
+            width: 100%;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        #search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: none;
+
+            .search-result {
+                padding: 1rem;
+                border-bottom: 1px solid $border-color;
+
+                &:last-child {
+                    border-bottom: none;
+                }
+
+                h3 {
+                    color: $primary-color;
+                    margin-bottom: 0.5rem;
+                }
+
+                a {
+                    color: $secondary-color;
+                    text-decoration: none;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Main content styles
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+// Events list styles
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.event-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+
+    &:hover {
+        transform: translateY(-2px);
+    }
+
+    h3 {
+        color: $primary-color;
+        margin-bottom: 1rem;
+    }
+
+    .view-details {
+        display: inline-block;
+        margin-top: 1rem;
+        color: $secondary-color;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+// Event details styles
+.event-details {
+    background: white;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    h2 {
+        color: $primary-color;
+        margin-bottom: 1rem;
+    }
+
+    .description {
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+    }
+}
+
+// Properties table styles
+.properties {
+    overflow-x: auto;
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid $border-color;
+        }
+
+        th {
+            background-color: $primary-color;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: color.adjust($background-color, $lightness: 2%);
+        }
+
+        code {
+            background-color: $background-color;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .examples {
+            list-style: none;
+
+            li {
+                margin-bottom: 0.5rem;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}
+
+// Navigation styles
+nav {
+    margin-top: 1rem;
+
+    a {
+        color: white;
+        text-decoration: none;
+        opacity: 0.8;
+
+        &:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+    }
+} 
