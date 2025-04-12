@@ -47,14 +47,15 @@ try {
         for (const [key, value] of Object.entries(properties || {})) {
             const currentPath = path ? `${path}.${key}` : key;
             const isRequired = required.includes(key);
+            const displayName = key; // Use just the key name for display
             
             if (value.type === 'object' && value.properties) {
                 // Handle nested object
                 result.push({
-                    name: currentPath,
+                    name: displayName,
                     type: 'object',
                     description: value.description || '',
-                    required: isRequired,
+                    optional: !isRequired,
                     examples: value.examples || [],
                     properties: processProperties(value.properties, value.required || [], currentPath)
                 });
@@ -62,29 +63,29 @@ try {
                 // Handle array type
                 if (value.items.type === 'object' && value.items.properties) {
                     result.push({
-                        name: currentPath,
+                        name: displayName,
                         type: 'array',
                         description: value.description || '',
-                        required: isRequired,
+                        optional: !isRequired,
                         examples: value.examples || [],
                         properties: processProperties(value.items.properties, value.items.required || [], currentPath)
                     });
                 } else {
                     result.push({
-                        name: currentPath,
+                        name: displayName,
                         type: `array<${value.items.type}>`,
                         description: value.description || '',
-                        required: isRequired,
+                        optional: !isRequired,
                         examples: value.examples || []
                     });
                 }
             } else {
                 // Handle simple types
                 result.push({
-                    name: currentPath,
+                    name: displayName,
                     type: value.type || 'unknown',
                     description: value.description || '',
-                    required: isRequired,
+                    optional: !isRequired,
                     examples: value.examples || []
                 });
             }
