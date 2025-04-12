@@ -9,3 +9,5 @@ There are also fields that are documented in the official documentation provided
 The community is free to use these schemas for their own projects and improve upon it in the following ways:
 - Add additional validation, keeping in mind forward compatibility for code generation.
 - Add support for older versions of journal events
+
+See https://jixxed.github.io/ed-journal-schemas/ for more information on the schemas and their usage.
