@@ -166,6 +166,12 @@ try {
         // Combine properties, putting base properties first
         const allProperties = [...baseProperties, ...eventProperties];
         
+        // Find and update the event field
+        const eventFieldIndex = allProperties.findIndex(prop => prop.name === 'event');
+        if (eventFieldIndex !== -1) {
+            allProperties[eventFieldIndex].examples = [eventName];
+        }
+        
         const processedSchema = {
             name: eventName,
             description: schema.description || '',
