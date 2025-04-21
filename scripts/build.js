@@ -41,13 +41,30 @@ try {
     console.log('SCSS processed successfully');
 
     // Recursive function to process properties
-    function processProperties(properties, required = [], path = '') {
+    function processProperties(properties, required = [], path = '', definitions = {}) {
         const result = [];
         
         for (const [key, value] of Object.entries(properties || {})) {
             const currentPath = path ? `${path}.${key}` : key;
             const isRequired = required.includes(key);
             const displayName = key; // Use just the key name for display
+            
+            // Handle $ref to definitions
+            if (value.$ref) {
+                const refPath = value.$ref.replace('#/definitions/', '');
+                const definition = definitions[refPath];
+                if (definition) {
+                    result.push({
+                        name: displayName,
+                        type: definition.type || 'object',
+                        description: definition.description || '',
+                        optional: !isRequired,
+                        examples: definition.examples || [],
+                        properties: processProperties(definition.properties || {}, definition.required || [], currentPath, definitions)
+                    });
+                    continue;
+                }
+            }
             
             if (value.type === 'object' && value.properties) {
                 // Handle nested object
@@ -57,10 +74,25 @@ try {
                     description: value.description || '',
                     optional: !isRequired,
                     examples: value.examples || [],
-                    properties: processProperties(value.properties, value.required || [], currentPath)
+                    properties: processProperties(value.properties, value.required || [], currentPath, definitions)
                 });
             } else if (value.type === 'array' && value.items) {
                 // Handle array type
+                if (value.items.$ref) {
+                    const refPath = value.items.$ref.replace('#/definitions/', '');
+                    const definition = definitions[refPath];
+                    if (definition) {
+                        result.push({
+                            name: displayName,
+                            type: 'array',
+                            description: value.description || '',
+                            optional: !isRequired,
+                            examples: value.examples || [],
+                            properties: processProperties(definition.properties || {}, definition.required || [], currentPath, definitions)
+                        });
+                        continue;
+                    }
+                }
                 if (value.items.type === 'object' && value.items.properties) {
                     result.push({
                         name: displayName,
@@ -68,7 +100,7 @@ try {
                         description: value.description || '',
                         optional: !isRequired,
                         examples: value.examples || [],
-                        properties: processProperties(value.items.properties, value.items.required || [], currentPath)
+                        properties: processProperties(value.items.properties, value.items.required || [], currentPath, definitions)
                     });
                 } else {
                     result.push({
@@ -128,8 +160,8 @@ try {
         // Process base event properties first
         const baseProperties = processProperties(baseEvent.properties || {}, baseEvent.required || []);
         
-        // Process the event's own properties
-        const eventProperties = processProperties(schema.properties || {}, schema.required || []);
+        // Process the event's own properties, including definitions
+        const eventProperties = processProperties(schema.properties || {}, schema.required || [], '', schema.definitions || {});
         
         // Combine properties, putting base properties first
         const allProperties = [...baseProperties, ...eventProperties];
