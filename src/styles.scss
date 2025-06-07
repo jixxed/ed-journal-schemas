@@ -32,6 +32,10 @@ header {
         margin-bottom: 1rem;
     }
 
+    .icon:visited {
+        color: white;
+    }
+
     .search-container {
         position: relative;
         max-width: 600px;
@@ -78,6 +82,11 @@ header {
             }
         }
     }
+}
+
+.icon {
+    display: inline;
+    text-decoration: none;
 }
 
 // Main content styles
@@ -133,6 +142,10 @@ main {
     h2 {
         color: $primary-color;
         margin-bottom: 1rem;
+
+        .icon, .icon:visited {
+            color: $primary-color;
+        }
     }
 
     .description {
