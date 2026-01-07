@@ -174,6 +174,9 @@ main {
             background-color: #2c3e50;  // Dark blue-gray
             color: white;
         }
+        .desc{
+          width: 22em;
+        }
 
         tr:hover {
             background-color: color.adjust($background-color, $lightness: 2%);
@@ -189,7 +192,7 @@ main {
         .codeblock{
           display: block;
           white-space: pre-wrap;
-          max-width: 30em;
+          width: 22em;
           word-wrap: normal;
         }
 
