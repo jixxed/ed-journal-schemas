@@ -52,16 +52,16 @@
                             {{#each properties}}
                                 <tr class="{{#if properties}}nested-property{{/if}}">
                                     <td>
-                                        <code>{{name}}</code>
+                                        <code class="code">{{name}}</code>
                                     </td>
-                                    <td><code>{{type}}</code></td>
+                                    <td><code class="code">{{type}}</code></td>
                                     <td>{{#if optional}}Yes{{else}}No{{/if}}</td>
-                                    <td>{{description}}</td>
+                                    <td>{{#if description}}<pre><code class="codeblock">{{description}}</code></pre>{{/if}}</td>
                                     <td>
                                         {{#if examples}}
                                             <ul class="examples">
                                                 {{#each examples}}
-                                                    <li><code>{{this}}</code></li>
+                                                    <li><code class="code">{{this}}</code></li>
                                                 {{/each}}
                                             </ul>
                                         {{else}}
@@ -86,16 +86,16 @@
                                                     {{#each properties}}
                                                         <tr class="{{#if properties}}nested-property{{/if}}">
                                                             <td>
-                                                                <code>{{name}}</code>
+                                                                <code class="code">{{name}}</code>
                                                             </td>
-                                                            <td><code>{{type}}</code></td>
+                                                            <td><code class="code">{{type}}</code></td>
                                                             <td>{{#if optional}}Yes{{else}}No{{/if}}</td>
-                                                            <td>{{description}}</td>
+                                                            <td>{{#if description}}<pre><code class="codeblock">{{description}}</code></pre>{{/if}}</td>
                                                             <td>
                                                                 {{#if examples}}
                                                                     <ul class="examples">
                                                                         {{#each examples}}
-                                                                            <li><code>{{this}}</code></li>
+                                                                            <li><code class="code">{{this}}</code></li>
                                                                         {{/each}}
                                                                     </ul>
                                                                 {{else}}
@@ -120,16 +120,16 @@
                                                                             {{#each properties}}
                                                                                 <tr>
                                                                                     <td>
-                                                                                        <code>{{name}}</code>
+                                                                                        <code class="code">{{name}}</code>
                                                                                     </td>
-                                                                                    <td><code>{{type}}</code></td>
+                                                                                    <td><code class="code">{{type}}</code></td>
                                                                                     <td>{{#if optional}}Yes{{else}}No{{/if}}</td>
-                                                                                    <td>{{description}}</td>
+                                                                                    <td>{{#if description}}<pre><code class="codeblock">{{description}}</code></pre>{{/if}}</td>
                                                                                     <td>
                                                                                         {{#if examples}}
                                                                                             <ul class="examples">
                                                                                                 {{#each examples}}
-                                                                                                    <li><code>{{this}}</code></li>
+                                                                                                    <li><code class="code">{{this}}</code></li>
                                                                                                 {{/each}}
                                                                                             </ul>
                                                                                         {{else}}

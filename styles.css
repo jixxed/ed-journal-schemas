@@ -43,7 +43,7 @@ th {
     margin: 0.25rem 0;
 }
 
-code {
+.code {
     background-color: #f8f9fa;
     padding: 0.2rem 0.4rem;
     border-radius: 3px;
@@ -128,4 +128,10 @@ mark {
     background-color: #fff3cd;
     padding: 0.1em 0.2em;
     border-radius: 2px;
-} 
+}
+.codeblock{
+    display: block;
+    white-space: pre-wrap;
+    width: 10em;
+    word-wrap: normal;
+}

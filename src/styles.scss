@@ -179,11 +179,18 @@ main {
             background-color: color.adjust($background-color, $lightness: 2%);
         }
 
-        code {
+        .code {
             background-color: $background-color;
             padding: 0.2rem 0.4rem;
             border-radius: 4px;
             font-family: monospace;
+        }
+
+        .codeblock{
+          display: block;
+          white-space: pre-wrap;
+          max-width: 30em;
+          word-wrap: normal;
         }
 
         .examples {
@@ -264,4 +271,4 @@ nav {
             text-decoration: underline;
         }
     }
-} 
+}
