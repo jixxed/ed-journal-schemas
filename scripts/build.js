@@ -40,8 +40,52 @@ try {
     fs.writeFileSync(path.join(DIST_DIR, 'styles.css'), result.css);
     console.log('SCSS processed successfully');
 
+    // Cache for external schema files to avoid loading them multiple times
+    const externalSchemaCache = {};
+
+    // Helper function to resolve external file references
+    function resolveExternalRef(ref, baseDir) {
+        // Check if this is an external file reference (contains a path)
+        if (!ref.includes('/') && !ref.includes('\\')) {
+            return null; // Local reference only
+        }
+
+        // Parse the reference: "../common/ShipLockerBackpack.json#/definitions/Item"
+        const [filePath, definitionPath] = ref.split('#');
+        const definitionName = definitionPath ? definitionPath.replace(/^\/definitions\//, '') : null;
+
+        // Resolve the file path relative to the base directory
+        const resolvedPath = path.resolve(baseDir, filePath);
+        const normalizedPath = path.normalize(resolvedPath);
+
+        // Check cache first
+        if (!externalSchemaCache[normalizedPath]) {
+            if (fs.existsSync(normalizedPath)) {
+                try {
+                    externalSchemaCache[normalizedPath] = JSON.parse(fs.readFileSync(normalizedPath, 'utf8'));
+                } catch (error) {
+                    console.warn(`Failed to load external schema file: ${normalizedPath}`, error);
+                    return null;
+                }
+            } else {
+                console.warn(`External schema file not found: ${normalizedPath}`);
+                return null;
+            }
+        }
+
+        const externalSchema = externalSchemaCache[normalizedPath];
+
+        // If definition path is specified, get the definition
+        if (definitionName && externalSchema.definitions && externalSchema.definitions[definitionName]) {
+            return externalSchema.definitions[definitionName];
+        }
+
+        // If no definition path, return the whole schema (for future use)
+        return externalSchema;
+    }
+
     // Recursive function to process properties
-    function processProperties(properties, required = [], path = '', definitions = {}) {
+    function processProperties(properties, required = [], path = '', definitions = {}, baseDir = SCHEMAS_DIR) {
         const result = [];
         
         for (const [key, value] of Object.entries(properties || {})) {
@@ -49,8 +93,23 @@ try {
             const isRequired = required.includes(key);
             const displayName = key; // Use just the key name for display
             
-            // Handle $ref to definitions
+            // Handle $ref to definitions (local or external)
             if (value.$ref) {
+                // Try to resolve as external reference first
+                const externalDefinition = resolveExternalRef(value.$ref, baseDir);
+                if (externalDefinition) {
+                    result.push({
+                        name: displayName,
+                        type: externalDefinition.type || 'object',
+                        description: externalDefinition.description || '',
+                        optional: !isRequired,
+                        examples: externalDefinition.examples || [],
+                        properties: processProperties(externalDefinition.properties || {}, externalDefinition.required || [], currentPath, definitions, baseDir)
+                    });
+                    continue;
+                }
+
+                // Fall back to local definition
                 const refPath = value.$ref.replace('#/definitions/', '');
                 const definition = definitions[refPath];
                 if (definition) {
@@ -60,7 +119,7 @@ try {
                         description: definition.description || '',
                         optional: !isRequired,
                         examples: definition.examples || [],
-                        properties: processProperties(definition.properties || {}, definition.required || [], currentPath, definitions)
+                        properties: processProperties(definition.properties || {}, definition.required || [], currentPath, definitions, baseDir)
                     });
                     continue;
                 }
@@ -74,11 +133,26 @@ try {
                     description: value.description || '',
                     optional: !isRequired,
                     examples: value.examples || [],
-                    properties: processProperties(value.properties, value.required || [], currentPath, definitions)
+                    properties: processProperties(value.properties, value.required || [], currentPath, definitions, baseDir)
                 });
             } else if (value.type === 'array' && value.items) {
                 // Handle array type
                 if (value.items.$ref) {
+                    // Try to resolve as external reference first
+                    const externalDefinition = resolveExternalRef(value.items.$ref, baseDir);
+                    if (externalDefinition) {
+                        result.push({
+                            name: displayName,
+                            type: 'array',
+                            description: value.description || '',
+                            optional: !isRequired,
+                            examples: value.examples || [],
+                            properties: processProperties(externalDefinition.properties || {}, externalDefinition.required || [], currentPath, definitions, baseDir)
+                        });
+                        continue;
+                    }
+
+                    // Fall back to local definition
                     const refPath = value.items.$ref.replace('#/definitions/', '');
                     const definition = definitions[refPath];
                     if (definition) {
@@ -88,7 +162,7 @@ try {
                             description: value.description || '',
                             optional: !isRequired,
                             examples: value.examples || [],
-                            properties: processProperties(definition.properties || {}, definition.required || [], currentPath, definitions)
+                            properties: processProperties(definition.properties || {}, definition.required || [], currentPath, definitions, baseDir)
                         });
                         continue;
                     }
@@ -100,7 +174,7 @@ try {
                         description: value.description || '',
                         optional: !isRequired,
                         examples: value.examples || [],
-                        properties: processProperties(value.items.properties, value.items.required || [], currentPath, definitions)
+                        properties: processProperties(value.items.properties, value.items.required || [], currentPath, definitions, baseDir)
                     });
                 } else {
                     result.push({
@@ -152,16 +226,17 @@ try {
         console.log(`Processing schema: ${schemaPath}`);
         const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
         const eventName = path.basename(path.dirname(schemaPath));
+        const schemaBaseDir = path.dirname(schemaPath);
         
         // Load and process the base Event schema
         const baseEventPath = path.join(SCHEMAS_DIR, '_Event.json');
         const baseEvent = JSON.parse(fs.readFileSync(baseEventPath, 'utf8'));
         
         // Process base event properties first
-        const baseProperties = processProperties(baseEvent.properties || {}, baseEvent.required || []);
+        const baseProperties = processProperties(baseEvent.properties || {}, baseEvent.required || [], '', {}, SCHEMAS_DIR);
         
         // Process the event's own properties, including definitions
-        const eventProperties = processProperties(schema.properties || {}, schema.required || [], '', schema.definitions || {});
+        const eventProperties = processProperties(schema.properties || {}, schema.required || [], '', schema.definitions || {}, schemaBaseDir);
         
         // Combine properties, putting base properties first
         const allProperties = [...baseProperties, ...eventProperties];
