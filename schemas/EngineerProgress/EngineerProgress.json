@@ -15,6 +15,7 @@
         "properties" : {
           "Engineer" : {
             "title" : "Engineer",
+            "description": "This property might not show up if it is an Odyssey engineer and the game is in Horizons mode",
             "type" : "string",
             "examples" : [ "Hera Tani", "The Sarge", "Professor Palin" ]
           },
