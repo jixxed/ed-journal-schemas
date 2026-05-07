@@ -250,7 +250,9 @@ try {
         const processedSchema = {
             name: eventName,
             description: schema.description || '',
-            properties: allProperties
+            properties: allProperties,
+            propertiesString: allProperties.map(prop => prop.name).join(' '),
+            propertiesDescriptionString: allProperties.map(prop => prop.description).join(' '),
         };
         
         // Debug logging

@@ -26,7 +26,7 @@
             <h2>All Events</h2>
             <div class="events-grid" id="events-grid">
                 {{#each events}}
-                <div class="event-card" data-event="{{name}}" data-description="{{description}}" data-fields="{{properties}}" data-fields-desc="{{propertyDescriptions}}">
+                <div class="event-card" data-event="{{name}}" data-description="{{description}}" data-fields="{{propertiesString}}" data-fields-desc="{{propertiesDescriptionString}}">
                     <h3>{{name}}</h3>
                     <p>{{description}}</p>
                     <a href="{{name}}.html" class="view-details">View Details</a>
