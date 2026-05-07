@@ -26,7 +26,7 @@
             <h2>All Events</h2>
             <div class="events-grid" id="events-grid">
                 {{#each events}}
-                <div class="event-card" data-event="{{name}}" data-description="{{description}}" data-fields="{{propertiesString}}" data-fields-desc="{{propertiesDescriptionString}}">
+                <div class="event-card" data-event="{{name}}" data-description="{{description}}" data-fields="{{propertiesString}}" {{!-- data-fields-desc="{{propertiesDescriptionString}}" --}}>
                     <h3>{{name}}</h3>
                     <p>{{description}}</p>
                     <a href="{{name}}.html" class="view-details">View Details</a>
@@ -64,12 +64,12 @@
                     const eventName = card.getAttribute('data-event');
                     const eventDesc = card.getAttribute('data-description');
                     const eventFields = card.getAttribute('data-fields');
-                    const eventFieldsDesc = card.getAttribute('data-fields-desc');
+//                     const eventFieldsDesc = card.getAttribute('data-fields-desc');
                     let isVisible = false;
                     
                     // Check if any word matches either the name or description
                     for (const word of words) {
-                        if (matchesQuery(eventName, word) || matchesQuery(eventDesc, word) || matchesQuery(eventFields, word) || matchesQuery(eventFieldsDesc, word)) {
+                        if (matchesQuery(eventName, word) || matchesQuery(eventDesc, word) || matchesQuery(eventFields, word) /* || matchesQuery(eventFieldsDesc, word) */) {
                             isVisible = true;
                             break;
                         }
