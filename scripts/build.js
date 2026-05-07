@@ -251,8 +251,37 @@ try {
             name: eventName,
             description: schema.description || '',
             properties: allProperties,
-            propertiesString: allProperties.map(prop => prop.name + (prop.properties !== undefined) ? prop.properties.map(prop => prop.name + (prop.properties !== undefined) ? prop.properties.map(prop => prop.name).join(' ') : '').join(' ') : '').join(' '),
-            propertiesDescriptionString: allProperties.map(prop => prop.description + (prop.properties !== undefined) ? prop.properties.map(prop => prop.description + (prop.properties !== undefined) ? prop.properties.map(prop => prop.description).join(' ') : '').join(' ') : '').join(' '),
+            propertiesString: allProperties.map(prop =>
+                prop.name +
+                (
+                    prop.properties !== undefined
+                        ? ' ' + prop.properties.map(child =>
+                        child.name +
+                        (
+                            child.properties !== undefined
+                                ? ' ' + child.properties.map(grandchild => grandchild.name).join(' ')
+                                : ''
+                        )
+                    ).join(' ')
+                        : ''
+                )
+            ).join(' '),
+
+            propertiesDescriptionString: allProperties.map(prop =>
+                (prop.description || '') +
+                (
+                    prop.properties !== undefined
+                        ? ' ' + prop.properties.map(child =>
+                        (child.description || '') +
+                        (
+                            child.properties !== undefined
+                                ? ' ' + child.properties.map(grandchild => grandchild.description || '').join(' ')
+                                : ''
+                        )
+                    ).join(' ')
+                        : ''
+                )
+            ).join(' ')
         };
         
         // Debug logging
