@@ -42,12 +42,20 @@
           "Name" : {
             "title" : "Name",
             "type" : "string",
-            "examples" : [ "hpt_pulselaser_fixed_medium", "hpt_pulselaser_fixed_large", "hpt_pulselaser_gimbal_small" ]
+            "examples" : [ "hpt_pulselaser_fixed_medium", "hpt_pulselaser_fixed_large", "hpt_pulselaser_gimbal_small" ],
+            "description": "An identifier for this module. Do note that this identifier is not unique between regular, pre-engineered and Merc modules."
           },
           "BuyPrice" : {
             "title" : "BuyPrice",
             "type" : "integer",
             "examples" : [ 16731, 66924, 6275 ]
+          },
+          "BuyMercCoinsPrice" : {
+            "title" : "BuyMercCoinsPrice",
+            "type" : "integer",
+            "minimum": 0,
+            "examples" : [ 550 ],
+            "description": "Positive Integer defining the price of a module bought with Merc coins. This property is only present on Merc modules."
           }
         },
         "additionalProperties" : false,
