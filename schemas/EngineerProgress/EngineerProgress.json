@@ -33,13 +33,13 @@
           },
           "RankProgress" : {
             "title" : "RankProgress",
-            "description": "This property might not show up if it is an Odyssey engineer and the game is in Horizons mode",
+            "description": "This property might not show up if it is an Odyssey engineer and the game is in Horizons mode. Is not present while engineer is still locked.",
             "type" : "integer",
             "examples" : [ 0, 36, 3 ]
           },
           "Rank" : {
             "title" : "Rank",
-            "description": "This property might not show up if it is an Odyssey engineer and the game is in Horizons mode",
+            "description": "This property might not show up if it is an Odyssey engineer and the game is in Horizons mode. Is not present while engineer is still locked.",
             "type" : "integer",
             "examples" : [ 5, 0, 3 ]
           }
@@ -62,7 +62,7 @@
     },
     "Progress" : {
       "title" : "Progress",
-      "description": "Update for one engineer",
+      "description": "Update for one engineer, this is not present when unlocking ranks 2-5",
       "type" : "string",
       "examples" : [ "Unlocked", "Invited" ]
     },
@@ -74,7 +74,7 @@
     },
     "RankProgress" : {
       "title" : "RankProgress",
-      "description": "Uncertain whether this is actually logged",
+      "description": "This value is never logged, but specified in the official journal docs. Possibly it was present in the pre Odyssey era with legacy engineering.",
       "type" : "integer",
       "examples" : [ 0, 36, 3 ]
     }
