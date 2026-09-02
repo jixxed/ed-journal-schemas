@@ -1,39 +1,36 @@
 {
   "$schema" : "https://json-schema.org/draft/2020-12/schema",
   "type" : "object",
-  "description": "When written: when launching a fighter",
+  "description": "When written: deploying the Vessel from a ship. (Added in the Rhino update)",
   "extends" : { "$ref": "../_Event.json"},
   "allOf": [{ "$ref": "../_Event.json"}],
   "properties" : {
-    "FighterType" : {
+    "VesselType" : {
       "title" : "VesselType",
-      "description": "Added in the Rhino update. Shows up as a blank field, so field name is assumed.",
       "type" : "string",
       "examples" : [ "lander01" ]
     },
-    "FighterType_Localised" : {
+    "VesselType_Localised" : {
       "title" : "VesselType_Localised",
-      "description": "Added in the Rhino update. Shows up as _Localised, so field name is assumed.",
       "type" : "string",
       "examples" : [ "Nomad" ]
     },
     "Loadout" : {
       "title" : "Loadout",
       "type" : "string",
-      "examples" : [ "zero", "one", "three" ]
+      "examples" : [ "base" ]
     },
     "ID" : {
       "title" : "ID",
       "type" : "integer",
-      "examples" : [ 68, 69, 25 ]
+      "examples" : [ 98 ]
     },
     "PlayerControlled" : {
       "title" : "PlayerControlled",
-      "description": "Whether player is controlling the fighter from launch",
       "type" : "boolean",
-      "examples" : [ false, true ]
+      "examples" : [ true ]
     }
   },
   "additionalProperties" : false,
-  "required" : [ "Loadout", "ID", "PlayerControlled" ]
+  "required" : [ "Loadout", "ID", "PlayerControlled", "VesselType", "VesselType_Localised" ]
 }

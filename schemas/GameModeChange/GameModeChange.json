@@ -1,0 +1,17 @@
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "description": "When written: when launching the game or switching game mode",
+  "extends" : { "$ref": "../_Event.json"},
+  "allOf": [{ "$ref": "../_Event.json"}],
+  "properties" : {
+    "GameModeChange" : {
+      "title" : "GameModeChange",
+      "description": "The game mode changing in to",
+      "type" : "string",
+      "examples" : [ "MainGame", "Operation" ]
+    }
+  },
+  "additionalProperties" : false,
+  "required" : [ "Scooped" ]
+}
