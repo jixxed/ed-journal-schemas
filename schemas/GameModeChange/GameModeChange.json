@@ -5,8 +5,8 @@
   "extends" : { "$ref": "../_Event.json"},
   "allOf": [{ "$ref": "../_Event.json"}],
   "properties" : {
-    "GameModeChange" : {
-      "title" : "GameModeChange",
+    "GameMode" : {
+      "title" : "GameMode",
       "description": "The game mode changing in to",
       "type" : "string",
       "examples" : [ "MainGame", "Operation" ]
