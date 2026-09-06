@@ -7,9 +7,9 @@
   "properties" : {
     "GameMode" : {
       "title" : "GameMode",
-      "description": "The game mode changing in to",
+      "description": "The game mode changing in to. Training missions do not appear to write a game mode, but CQC, the main game and operations do.",
       "type" : "string",
-      "examples" : [ "MainGame", "Operation" ]
+      "examples" : [ "MainGame", "Operation", "ProvingGrounds" ]
     }
   },
   "additionalProperties" : false,
